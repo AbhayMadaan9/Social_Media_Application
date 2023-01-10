@@ -1,6 +1,4 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
-import { current_theme } from '../theme_toggle';
 import HomeIcon from '@mui/icons-material/Home';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import AppsIcon from '@mui/icons-material/Apps';
@@ -8,6 +6,10 @@ import EmailIcon from '@mui/icons-material/Email';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import styled from 'styled-components'
+import { useContext } from 'react';
+import { DarkModeContext } from '../Context/darkModeContext'
+import WbSunnyIcon from '@mui/icons-material/WbSunny';
+
 
 const Sec = styled.div`
 height: 50px;
@@ -15,12 +17,17 @@ display: flex;
 flex-direction: row;
 justify-content: space-between;
 align-items: center;
+background-color: ${props=>props.theme.bg};
+position: sticky;
+top: 0;
+border: ${props=>props.theme.border};
+color: ${props=>props.theme.textColor};;
 `
-const Logo = styled.img`
-object-fit: cover;
-width: 80px;
-height: fit-content;
-`
+// const Logo = styled.img`
+// object-fit: cover;
+// width: 80px;
+// height: fit-content;
+// `
 const Left = styled.div`
 display: flex;
 flex-direction: row;
@@ -47,12 +54,12 @@ width: 200px;
 const Title = styled.h3`
 font-weight: bold;
 font-family: 'Archivo Black', sans-serif;
+color: ${props=>props.theme.logo};;
 `
 export default function Navbar() {
-  const dispatch = useDispatch()
-  const handle_func = ()=>{
-    dispatch(current_theme);
-  }
+  const {darkMode, toggle} = useContext(DarkModeContext);
+  console.log(useContext(DarkModeContext))
+ // const cur_state = JSON.parse(localStorage.getItem("darkMode"))
   return (
     <>
      <Sec>
@@ -60,8 +67,9 @@ export default function Navbar() {
         {/* <Logo src='./images/logo.png'/> */}
         <Title>METAVERSE</Title>
         <HomeIcon fontSize='large'/>
-        <div onClick={handle_func} style={{cursor: 'pointer'}}>
-        <DarkModeIcon fontSize='large'/>
+       
+        <div onClick={toggle} style={{cursor: 'pointer'}}>
+        {darkMode? <DarkModeIcon fontSize='large'/>:<WbSunnyIcon fontSize='large'/>}
         </div>
         <AppsIcon fontSize='large'/>
         <Input placeholder='Search..' type="text" />
@@ -73,7 +81,6 @@ export default function Navbar() {
         <span>Abhay</span>
       </Right>
       </Sec>   
-      <hr/>
     </>
   )
 }

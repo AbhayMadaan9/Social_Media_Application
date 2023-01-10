@@ -13,34 +13,32 @@ import {
   RouterProvider,
   Navigate
 } from "react-router-dom";
-import { store } from './store'
-import { Provider } from 'react-redux'
+import { useContext } from 'react';
+import { DarkModeContext } from './Context/darkModeContext';
 
 
-const theme = {
-  light: {
-    textColor: "whitesmoke",
+const light_theme = {
+  textColor: "whitesmoke",
     bg: "#222",
     logo: "white",
     bgSoft: "#333",
     textColorSoft: "lightgray",
     border: "#444"
-  },
-  dark: {
-    textColor: "#000",
+}
+const dark_theme = {
+  textColor: "#000",
     bg: "white",
     logo: "darkblue",
     bgSoft: "#f6f3f3",
     textColorSoft: "#555",
-    border: "lightgray",
-  }
+    border: "lightgray"
 }
 export default function App() {
-  const currentUser = false;
-  const Layout = ()=> {
+  const currentUser = false; 
+  const {darkMode} = useContext(DarkModeContext);
+ const Layout = ()=> {
     return (
-      <Provider store={store}>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={darkMode?dark_theme:light_theme}>
       <div>
       <Navbar/>
       <div style={{display: "flex", justifyContent: "space-between"}}>
@@ -50,8 +48,6 @@ export default function App() {
       </div>
       </div>
       </ThemeProvider>
-      </Provider>
-      
     );
     
   };

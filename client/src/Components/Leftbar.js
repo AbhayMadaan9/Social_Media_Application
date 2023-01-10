@@ -2,6 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 const Sec = styled.div`
 width: 18rem;
+background-color: ${props=>props.theme.bg};
+padding: 5px;
+color: ${props=>props.theme.textColor};;
 `
 const Menu = styled.div`
 display: flex;

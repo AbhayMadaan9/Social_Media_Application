@@ -6,6 +6,8 @@ display: flex;
 flex-direction: column;
 align-items: flex-end;
 gap: 20px;
+color: ${props=>props.theme.textColorSoft};
+margin-top: 10px;
 `
 const Sec = styled.div`
 display: flex;
@@ -15,6 +17,8 @@ justify-content: center;
 border: 1px solid black;
 min-width: 25rem;
 padding: 10px;
+background-color: ${props=>props.theme.bg};
+//color: ${props=>props.theme.textColorSoft};
 box-shadow: -1px 7px 11px 0px rgba(0,0,0,0.71);
 -webkit-box-shadow: -1px 7px 11px 0px rgba(0,0,0,0.71);
 -moz-box-shadow: -1px 7px 11px 0px rgba(0,0,0,0.71);
