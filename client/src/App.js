@@ -1,5 +1,5 @@
-import React,{useState} from 'react'
-import { Home } from './Pages/Home'
+import React from 'react'
+import  Home  from './Pages/Home'
 import { Login } from './Pages/Login'
 import { Register } from './Pages/Register';
 import Navbar from './Components/Navbar'
@@ -41,9 +41,9 @@ export default function App() {
       <ThemeProvider theme={darkMode?dark_theme:light_theme}>
       <div>
       <Navbar/>
-      <div style={{display: "flex", justifyContent: "space-between"}}>
+      <div style={{display: "flex", justifyContent: "space-between", alignContent: "center", flexDirection: "row"}}>
         <Leftbar/>
-        <Outlet/>
+        <Home/>
         <Rightbar/>
       </div>
       </div>

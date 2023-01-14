@@ -1,5 +1,6 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import styled from 'styled-components'
+import { AuthContext } from '../Context/authContext';
 const Sec = styled.div`
 width: 18rem;
 background-color: ${props=>props.theme.bg};
@@ -24,6 +25,7 @@ margin: 5px;
 `
 const Img = styled.img`
 height: 25px;
+border-radius: 30px;
 `
 const Hr = styled.hr`
 height: .001px;
@@ -32,13 +34,14 @@ margin: 0;
 width: 14rem;
 `
 export default function Leftbar() {
+  const {currentUser} = useContext(AuthContext)
   return (
     <>
     <Sec>
       <Menu>
       <Item>
-      <Img src='https://cdn-icons-png.flaticon.com/512/1256/1256637.png?w=740&t=st=1673235685~exp=1673236285~hmac=90adf828a4736385360ada9c172e163fcd226ec3941a78ba9386f8de69b15b1f'/>
-          <span>Account</span>
+      <Img src={currentUser.profilePic}/>
+          <span>{currentUser.name}</span>
         </Item>
         <Item>
           <Img src='https://cdn-icons-png.flaticon.com/512/1204/1204086.png?w=740&t=st=1673206078~exp=1673206678~hmac=2abd33d7af25b3d9958841d332ddd7058b45aafb72e207e478594c0fb9e0df53'/>

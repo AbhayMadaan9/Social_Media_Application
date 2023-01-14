@@ -7,6 +7,7 @@ flex-direction: column;
 align-items: flex-end;
 gap: 20px;
 color: ${props=>props.theme.textColorSoft};
+background-color: ${props=>props.theme.bgSoft};
 margin-top: 10px;
 `
 const Sec = styled.div`

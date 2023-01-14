@@ -1,7 +1,7 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import styled from 'styled-components'
 import TextField from '@mui/material/TextField'
-
+import {AuthContext} from '../Context/authContext'
 
 const Sec = styled.div`
 margin: 0;
@@ -48,6 +48,7 @@ font-size: large;
 }
 `
 export const Login = () => {
+  const {login} = useContext(AuthContext)
   return (
     <Sec>
       <Contents>
@@ -57,7 +58,7 @@ export const Login = () => {
             <TextField label="Username"/>
             <TextField label="Password"/>
             <span>Forget Password?</span>
-           <Button>Sign In</Button>
+           <Button onClick={login()}>Sign In</Button>
           </Form>
         </Content1>
         <Content2>

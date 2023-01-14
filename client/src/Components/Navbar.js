@@ -1,15 +1,13 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import HomeIcon from '@mui/icons-material/Home';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import AppsIcon from '@mui/icons-material/Apps';
 import EmailIcon from '@mui/icons-material/Email';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import styled from 'styled-components'
-import { useContext } from 'react';
 import { DarkModeContext } from '../Context/darkModeContext'
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
-
+import { AuthContext } from '../Context/authContext';
 
 const Sec = styled.div`
 height: 50px;
@@ -21,7 +19,8 @@ background-color: ${props=>props.theme.bg};
 position: sticky;
 top: 0;
 border: ${props=>props.theme.border};
-color: ${props=>props.theme.textColor};;
+color: ${props=>props.theme.textColor};
+z-index: 2;
 `
 // const Logo = styled.img`
 // object-fit: cover;
@@ -56,10 +55,16 @@ font-weight: bold;
 font-family: 'Archivo Black', sans-serif;
 color: ${props=>props.theme.logo};;
 `
+const Img = styled.img`
+height: 25px;
+border-radius: 30px;
+`
+
+
 export default function Navbar() {
   const {darkMode, toggle} = useContext(DarkModeContext);
+  const {currentUser} = useContext(AuthContext)
   console.log(useContext(DarkModeContext))
- // const cur_state = JSON.parse(localStorage.getItem("darkMode"))
   return (
     <>
      <Sec>
@@ -77,8 +82,8 @@ export default function Navbar() {
       <Right>
         <NotificationsIcon fontSize='large'/>
         <EmailIcon fontSize='large'/>
-        <AccountCircleIcon fontSize='large'/>
-        <span>Abhay</span>
+        <Img src={currentUser.profilePic}/>
+        <span>{currentUser.name}</span>
       </Right>
       </Sec>   
     </>
