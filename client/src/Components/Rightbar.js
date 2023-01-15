@@ -8,7 +8,7 @@ align-items: flex-end;
 gap: 20px;
 color: ${props=>props.theme.textColorSoft};
 background-color: ${props=>props.theme.bgSoft};
-margin-top: 10px;
+
 
 `
 const Sec = styled.div`
@@ -24,6 +24,7 @@ background-color: ${props=>props.theme.bg};
 box-shadow: -1px 7px 11px 0px rgba(0,0,0,0.71);
 -webkit-box-shadow: -1px 7px 11px 0px rgba(0,0,0,0.71);
 -moz-box-shadow: -1px 7px 11px 0px rgba(0,0,0,0.71);
+margin-top: 10px;
 `
 const Item = styled.div`
 display: flex;

@@ -33,6 +33,7 @@ const dark_theme = {
     textColorSoft: "#555",
     border: "lightgray"
 }
+
 export default function App() {
   const currentUser = false; 
   const {darkMode} = useContext(DarkModeContext);
@@ -43,7 +44,7 @@ export default function App() {
       <Navbar/>
       <div style={{display: "flex", justifyContent: "space-between", alignContent: "center", flexDirection: "row"}}>
         <Leftbar/>
-        <Outlet/>
+        <Home/>
         <Rightbar/>
       </div>
       </div>
@@ -68,11 +69,11 @@ export default function App() {
       ),
       Children: [
         {
-          path: "/",
+          path: "*",
           element: <Home/>
         },
         {
-          path: "/profile/:id",
+          path: "profile",
           element: <Profile/>
         },
       ]
