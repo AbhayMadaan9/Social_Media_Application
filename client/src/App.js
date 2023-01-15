@@ -3,7 +3,7 @@ import  Home  from './Pages/Home'
 import { Login } from './Pages/Login'
 import { Register } from './Pages/Register';
 import Navbar from './Components/Navbar'
-import Profile from './Pages/Profile'
+import Profile from './Components/Profile'
 import Leftbar from './Components/Leftbar'
 import Rightbar from './Components/Rightbar'
 import { ThemeProvider } from 'styled-components';
@@ -43,7 +43,7 @@ export default function App() {
       <Navbar/>
       <div style={{display: "flex", justifyContent: "space-between", alignContent: "center", flexDirection: "row"}}>
         <Leftbar/>
-        <Home/>
+        <Outlet/>
         <Rightbar/>
       </div>
       </div>

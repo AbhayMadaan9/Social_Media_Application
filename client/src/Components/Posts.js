@@ -6,6 +6,8 @@ const Sec = styled.div`
   display: flex;
   flex-direction: column;
   gap: 50px;
+  align-items: center;
+  justify-content: center;
 `
 const Posts = () => {
   //TEMPORARY
@@ -28,7 +30,6 @@ const Posts = () => {
       desc: "Tenetur iste voluptates dolorem rem commodi voluptate pariatur, voluptatum, laboriosam consequatur enim nostrum cumque! Maiores a nam non adipisci minima modi tempore.",
     },
   ];
-
   return <Sec>
     {posts.map(post=>(
       <Post post={post} key={post.id}/>

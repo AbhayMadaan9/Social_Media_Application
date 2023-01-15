@@ -3,9 +3,13 @@ import styled from 'styled-components'
 import { AuthContext } from '../Context/authContext';
 const Sec = styled.div`
 width: 18rem;
-background-color: ${props=>props.theme.bg};
+background-color: ${props=>props.theme.bgSoft};
 padding: 5px;
-color: ${props=>props.theme.textColor};;
+color: ${props=>props.theme.textColor};
+/* overflow: scroll;
+::-webkit-scrollbar {
+    display: none
+} */
 `
 const Menu = styled.div`
 display: flex;
@@ -13,7 +17,8 @@ flex-direction: column;
 justify-content: center;
 align-items: flex-start;
 gap: 12px;
-margin: 0;
+margin: .1rem;
+background-color: ${props=>props.theme.bg};
 `
 const Item = styled.div`
 display: flex;
