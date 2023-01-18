@@ -1,6 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import TextField from '@mui/material/TextField'
+import axios from 'axios'
+import { Navigate } from 'react-router-dom'
+//const axios = require('axios')
 
 
 const Sec = styled.div`
@@ -49,17 +52,46 @@ font-size: large;
 }
 `
 export const Register = () => {
+
+  const [Successs, setSuccesss] = React.useState(false)
+  const [Inputs, setInputs] = React.useState({
+    username: "",
+    email: "",
+    password: "",
+    name: ""
+  })
+  const [Errorr, setErrorr] = React.useState("")
+   
+  const handleChange = (e) => {
+    setInputs(prev => ({
+      ...prev, [e.target.name]: e.target.value 
+    }))
+
+  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+      try {
+        await axios.post("http://localhost:5500/auth/register",Inputs)
+        setSuccesss(true)
+      } catch (error) {
+        setErrorr(error.message)
+      }
+  }
+
+
   return (
     <Sec>
       <Contents>
         <Content1>
           <Form>
             <Title>Sign Into Your Account</Title>
-            <TextField label="Username"/>
-            <TextField label="Email"/>
-            <TextField label="Password"/>
-            <TextField label="Name"/>
-           <Button>Register</Button>
+            <TextField label="username" name='username' onChange={handleChange} />
+            <TextField label="email" name='email' onChange={handleChange} />
+            <TextField label="password" name='password' onChange={handleChange} />
+            <TextField label="name" name='name' onChange={handleChange} />
+            <Button onClick={handleSubmit}>Register</Button>
+            {Errorr.length>0 && <Navigate to='/err'/>}
+            {Successs && <Navigate to='/success'/>}
           </Form>
         </Content1>
         <Content2>

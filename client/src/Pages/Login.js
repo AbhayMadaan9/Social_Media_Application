@@ -2,6 +2,8 @@ import React,{useContext} from 'react'
 import styled from 'styled-components'
 import TextField from '@mui/material/TextField'
 import {AuthContext} from '../Context/authContext'
+import axios from 'axios'
+import { Navigate } from 'react-router-dom'
 
 const Sec = styled.div`
 margin: 0;
@@ -48,17 +50,41 @@ font-size: large;
 }
 `
 export const Login = () => {
+  const [Successs, setSuccesss] = React.useState(false)
+  const [Errorr, setErrorr] = React.useState("")
+  const [Inputs, setInputs] = React.useState({
+    username: "",
+    password: ""
+  })
   const {login} = useContext(AuthContext)
+  const handle_change = (e)=>{
+    setInputs(prev=>({
+      ...prev, [e.target.name]: e.target.value
+    }))
+  }
+  const handle_login = async(e)=>{
+    e.preventDefault();
+    try {
+      console.log(Inputs);
+      await login(Inputs);
+      setSuccesss(true)
+    } catch (error) {
+      setErrorr(error.message)
+    }
+ 
+  }
   return (
     <Sec>
       <Contents>
         <Content1>
           <Form>
             <Title>Sign Into Your Account</Title>
-            <TextField label="Username"/>
-            <TextField label="Password"/>
+            <TextField label="Username" name='username' onChange={handle_change}/>
+            <TextField label="Password" name='password' onChange={handle_change}/>
             <span>Forget Password?</span>
-           <Button onClick={login()}>Sign In</Button>
+           <Button onClick={handle_login}>Sign In</Button>
+           {Successs && <Navigate to='/'/>}
+           {Errorr && <Navigate to='/err'/>}
           </Form>
         </Content1>
         <Content2>

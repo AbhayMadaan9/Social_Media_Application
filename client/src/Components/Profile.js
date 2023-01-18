@@ -14,7 +14,7 @@ import Posts from './Posts'
 import About from './About'
 import Followers from './Followers'
 import Photos from './Photos'
-
+import { medium_devices } from '../medium_devices';
 
 
 const Sec = styled.div`
@@ -24,6 +24,7 @@ align-items: center;
 gap: 1rem;
 background-color: ${props=>props.theme.bgSoft};
 color: ${props=>props.theme.textColor};
+${medium_devices({ "width": "100%" })}
 `
 const Img = styled.img`
 width: 60rem;

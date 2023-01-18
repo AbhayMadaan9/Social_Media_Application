@@ -1,5 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
+import { medium_devices } from '../medium_devices'
+
 
 const Main = styled.div`
 display: flex;
@@ -8,8 +10,7 @@ align-items: flex-end;
 gap: 20px;
 color: ${props=>props.theme.textColorSoft};
 background-color: ${props=>props.theme.bgSoft};
-
-
+${medium_devices({ "display": "none" })}
 `
 const Sec = styled.div`
 display: flex;

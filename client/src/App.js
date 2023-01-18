@@ -15,6 +15,9 @@ import {
 } from "react-router-dom";
 import { useContext } from 'react';
 import { DarkModeContext } from './Context/darkModeContext';
+import Success from './Pages/Success';
+import Error from './Pages/Error'
+import { AuthContext } from './Context/authContext';
 
 
 const light_theme = {
@@ -35,7 +38,7 @@ const dark_theme = {
 }
 
 export default function App() {
-  const currentUser = false; 
+  const {currentUser} = useContext(AuthContext) 
   const {darkMode} = useContext(DarkModeContext);
  const Layout = ()=> {
     return (
@@ -44,7 +47,7 @@ export default function App() {
       <Navbar/>
       <div style={{display: "flex", justifyContent: "space-between", alignContent: "center", flexDirection: "row"}}>
         <Leftbar/>
-        <Home/>
+        <Profile/>
         <Rightbar/>
       </div>
       </div>
@@ -53,7 +56,7 @@ export default function App() {
     
   };
   const ProtectedRoute = ({ children }) => {
-    if (currentUser) {
+    if (currentUser.username > 0) {
       return <Navigate to="/login" />;
     }
 
@@ -85,6 +88,14 @@ export default function App() {
     {
       path: "/register",
       element: <Register/>,
+    },
+    {
+      path: "/success",
+      element: <Success/>,
+    },
+    {
+      path: "/err",
+      element: <Error/>,
     },
   
   ]);

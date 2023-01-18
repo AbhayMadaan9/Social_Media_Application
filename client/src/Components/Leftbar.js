@@ -1,6 +1,9 @@
 import React,{useContext} from 'react'
 import styled from 'styled-components'
 import { AuthContext } from '../Context/authContext';
+import { medium_devices } from '../medium_devices';
+
+
 const Sec = styled.div`
 width: 18rem;
 background-color: ${props=>props.theme.bgSoft};
@@ -10,6 +13,7 @@ color: ${props=>props.theme.textColor};
 ::-webkit-scrollbar {
     display: none
 } */
+${medium_devices({ "display": "none" })}
 `
 const Menu = styled.div`
 display: flex;
