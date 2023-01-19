@@ -18,7 +18,9 @@ import { DarkModeContext } from './Context/darkModeContext';
 import Success from './Pages/Success';
 import Error from './Pages/Error'
 import { AuthContext } from './Context/authContext';
-
+import { QueryClient, QueryClientProvider } from 'react-query'
+ 
+ 
 
 const light_theme = {
   textColor: "whitesmoke",
@@ -40,23 +42,26 @@ const dark_theme = {
 export default function App() {
   const {currentUser} = useContext(AuthContext) 
   const {darkMode} = useContext(DarkModeContext);
+  const queryClient = new QueryClient()
  const Layout = ()=> {
     return (
+      <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={darkMode?dark_theme:light_theme}>
       <div>
       <Navbar/>
       <div style={{display: "flex", justifyContent: "space-between", alignContent: "center", flexDirection: "row"}}>
         <Leftbar/>
-        <Profile/>
+        <Home/>
         <Rightbar/>
       </div>
       </div>
       </ThemeProvider>
+      </QueryClientProvider>
     );
     
   };
   const ProtectedRoute = ({ children }) => {
-    if (currentUser.username > 0) {
+    if (currentUser.username == 0) {
       return <Navigate to="/login" />;
     }
 

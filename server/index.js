@@ -20,15 +20,16 @@ app.use(function(req, res, next) {
 });
   app.use(express.json());
   app.use(
-    cors()
+    cors({origin: "http://localhost:3000"})
   );
   app.use(cookieParser())
 app.use(cors({credentials: true, origin: true}))
 
-const authRoute = require('./routes/auths')     
+ 
 
 //endpoints
-app.use('/auth', authRoute)
+app.use('/auth', require('./routes/auths'))
+app.use('/user', require('./routes/posts'))
 
 
 app.listen(5500, ()=>{console.log('listening at http://localhost:5500')})

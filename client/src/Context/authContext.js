@@ -12,8 +12,6 @@ export const AuthContextProvider = ({ children }) => {
       const res = await axios.post("http://localhost:5500/auth/login", Inputs,  {withCredentials: true},
       ); //withcredentials is made true when working with cookies
     setCurrentUser(res.data)
-    console.log(res.data);
-    
     
   };
   

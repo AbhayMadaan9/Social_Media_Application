@@ -82,7 +82,7 @@ export const Login = () => {
             <TextField label="Username" name='username' onChange={handle_change}/>
             <TextField label="Password" name='password' onChange={handle_change}/>
             <span>Forget Password?</span>
-           <Button onClick={handle_login}>Sign In</Button>
+           <Button onClick={handle_login} type='submit'>Sign In</Button>
            {Successs && <Navigate to='/'/>}
            {Errorr && <Navigate to='/err'/>}
           </Form>
