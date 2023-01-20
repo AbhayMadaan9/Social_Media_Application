@@ -32,16 +32,11 @@ const addpost = (req, res)=>{
 
 }
 const deletePost = (req, res)=>{
- 
-    
-        
-        const UserPostId = req.body.userpostId;
-        const UserId = req.body.userId;
-
+    console.log(req.query.userId);
         try {
-            if(req.id === UserId){
+            if(req.id == req.query.userId){
                 const q = 'DELETE FROM posts WHERE  id=?'   
-                db.query(q,[UserPostId], (err)=>{
+                db.query(q,[req.query.postid], (err)=>{
                     if(err) return res.status(500).json(err)
                     else return res.status(200).send("Post deleted succesfully")
                 })

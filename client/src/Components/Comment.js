@@ -24,6 +24,7 @@ justify-content: flex-start;
 align-items: flex-start;
 `
 export const Comment = ({details}) => {
+
   return (
     <>
     <Sec>

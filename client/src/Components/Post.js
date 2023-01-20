@@ -108,19 +108,34 @@ export default function Post({ post }) {
     const handleClose = () => setOpen(false);
     const [commentOpen, setCommentOpen] = React.useState(false);
     const [Like, setLike] = React.useState(false);
-    const [cmts, setcmts] = useState([])
     const { currentUser } = React.useContext(AuthContext);
+    const [cmts, setcmts] = React.useState([])
+    const [addCmts, setaddCmts] = React.useState({
+        desc: "",
+        postId: post.id
+    })
 
     React.useEffect(() => {
-        const res = axios.get("http://localhost:5500/users/comments");
-        setcmts(res.data);
-    }, [cmts])
-
+      const res = axios.get('http://localhost:5500/users/comments?postID='+ post.id,{withCredentials: true})
+      setcmts(res.data);
+      console.log(res.data);
+  }, [cmts])
+  
     const handle_delete = (e) => {
         const details = { userpostId: post.id, userId: post.user_id }
         e.preventDefault();
-        axios.delete("http://localhost:5500/user/deletePost", details, { withCredentials: true })
+        axios.delete("http://localhost:5500/user/deletePost?postid="+post.id+"&userId="+ post.user_id, { withCredentials: true })
         setpostdel(true);
+    }
+    const handle_Comment = (e)=>{
+        e.preventDefault();
+        axios.post("http://localhost:5500/users/addComment", addCmts, {withCredentials: true})
+        alert("please refresh the page")
+    }
+    const handle_Comment_change = (e)=>{
+        setaddCmts((prev)=>({
+            ...prev, [e.target.name]: e.target.value
+         } ))
     }
     return (
         <>
@@ -164,13 +179,13 @@ export default function Post({ post }) {
                     <form >
                         <AddComment>
                             <Avatar src={currentUser.profilePic} sx={{ width: "3rem", height: "3rem" }} />
-                            <Input />
-                            <Button variant="contained">Send</Button>
+                            <Input type='text' onChange={handle_Comment_change} name='desc'/>
+                            <Button variant="contained" onClick={handle_Comment}>Send</Button>
                         </AddComment>
                     </form>
-                    {cmts.map(cmts => (
+                    {/* {cmts.map(cmts => (
                         <Comment details={cmts} key={cmts.id} />
-                    ))}
+                    ))} */}
                 </Comments>
 
 
