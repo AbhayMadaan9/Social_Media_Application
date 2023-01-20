@@ -3,6 +3,7 @@ const app = express()
 const db = require('./connection')
 const cors = require('cors')
 const cookieParser = require('cookie-parser')
+const bodyParser = require("body-parser"); 
 db.connect()
 
 //middlewares
@@ -24,12 +25,13 @@ app.use(function(req, res, next) {
   );
   app.use(cookieParser())
 app.use(cors({credentials: true, origin: true}))
-
+//app.use(bodyParser.json());
  
 
 //endpoints
 app.use('/auth', require('./routes/auths'))
 app.use('/user', require('./routes/posts'))
+app.use('/users', require('./routes/comments'))
 
 
 app.listen(5500, ()=>{console.log('listening at http://localhost:5500')})

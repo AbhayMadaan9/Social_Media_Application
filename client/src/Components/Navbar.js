@@ -9,6 +9,8 @@ import { DarkModeContext } from '../Context/darkModeContext'
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import { AuthContext } from '../Context/authContext';
 import { small_devices } from '../small_devices';
+import {Link} from 'react-router-dom'
+
 
 
 const Sec = styled.div`
@@ -97,6 +99,7 @@ export default function Navbar() {
         <EmailIcon fontSize='large'/>
         <Img src={currentUser.profilePic}/>
         <span>{currentUser.name}</span>
+        <span><Link to="/logout">Logout</Link></span>
       </Right>
       </Sec>   
     </>

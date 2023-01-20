@@ -14,14 +14,19 @@ export const AuthContextProvider = ({ children }) => {
     setCurrentUser(res.data)
     
   };
+  const logout = async() => { //it do 2 things: 1.remove access token using the api 2.remove the data from localstorage
+    const res = await axios.post("http://localhost:5500/auth/logout",  {withCredentials: true},
+    ); //withcredentials is made true when working with cookies
+  setCurrentUser(null)
   
+};
 
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(currentUser));
   }, [currentUser]);
 
   return (
-    <AuthContext.Provider value={{ currentUser, login }}>
+    <AuthContext.Provider value={{ currentUser, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

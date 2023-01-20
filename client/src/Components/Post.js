@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import InsertCommentIcon from '@mui/icons-material/InsertComment';
@@ -10,6 +9,8 @@ import Button from '@mui/material/Button'
 import { AuthContext } from "../Context/authContext";
 import Avatar from '@mui/material/Avatar';
 import { Comment } from './Comment';
+import axios from 'axios';
+import { Alert } from '@mui/material';
 
 
 
@@ -27,13 +28,16 @@ align-items: center;
 margin-top: 5rem;
 flex-wrap: nowrap;
 gap: 1rem;
+background-color: ${props => props.theme.bg};
+color: ${props => props.theme.textColorSoft}; 
 `
 const Person = styled.div`
 display: flex;
 flex-direction: row;
 align-items: center;
 justify-content: space-between;
-gap: 30rem;
+/* gap: 30rem; */
+width: 100%;
 
 `
 const About = styled.div`
@@ -61,8 +65,8 @@ const PostDesc = styled.p`
  font-weight: bold;
  `
 const Img = styled.img`
-width: 100%;
-height: 20rem;
+width: 30rem;
+height: auto;
 object-fit: cover;
 
 `
@@ -79,7 +83,7 @@ const Comments = styled.div`
  align-items: center;
  justify-content: center;
  `
- const AddComment = styled.div`
+const AddComment = styled.div`
  display: flex;
 flex-direction: row;
 align-items: center;
@@ -98,50 +102,47 @@ font-size: large;
 
 
 export default function Post({ post }) {
+    const [postdel, setpostdel] = React.useState(false)
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
     const [commentOpen, setCommentOpen] = React.useState(false);
     const [Like, setLike] = React.useState(false);
-    const comments = [
-        {
-          id: 1,
-          desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem nequeaspernatur ullam aperiam. Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem nequeaspernatur ullam aperiam",
-          name: "John Doe",
-          userId: 1,
-          profilePicture:
-            "https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-        },
-        {
-          id: 2,
-          desc: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem nequeaspernatur ullam aperiam",
-          name: "Jane Doe",
-          userId: 2,
-          profilePicture:
-            "https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg?auto=compress&cs=tinysrgb&w=1600",
-        },
-      ];
-      const { currentUser } = React.useContext(AuthContext);
+    const [cmts, setcmts] = useState([])
+    const { currentUser } = React.useContext(AuthContext);
 
+    React.useEffect(() => {
+        const res = axios.get("http://localhost:5500/users/comments");
+        setcmts(res.data);
+    }, [cmts])
+
+    const handle_delete = (e) => {
+        const details = { userpostId: post.id, userId: post.user_id }
+        e.preventDefault();
+        axios.delete("http://localhost:5500/user/deletePost", details, { withCredentials: true })
+        setpostdel(true);
+    }
     return (
         <>
+            {postdel && alert("Please refresh the page ")}
             <Sec>
                 <Person>
                     <About>
-                        
-                        <Avatar src={post.profilePic} onClick={handleOpen} sx={{width:"3rem", height:"3rem"}}/>
+
+                        <Avatar src={post.profilePic} onClick={handleOpen} sx={{ width: "3rem", height: "3rem" }} />
                         <Modal
-                        open={open}
-                        onClose={handleClose}
-                        aria-labelledby="modal-modal-title"
-                        aria-describedby="modal-modal-description"
+                            open={open}
+                            onClose={handleClose}
+                            aria-labelledby="modal-modal-title"
+                            aria-describedby="modal-modal-description"
                         >
-                            <Img src={post.profilePic} style={{width:"30rem", objectFit:"cover", height:"30rem"}}/>
+                            <Img src={post.profilePic} style={{ width: "30rem", objectFit: "cover", height: "30rem" }} />
                         </Modal>
                         <P>{post.name}</P>
                     </About>
-                    <Icon>
-                        <MoreHorizIcon />
+
+                    <Icon onClick={handle_delete}>
+                        <p>Delete Post</p>
                     </Icon>
                 </Person>
                 <PostDesc>
@@ -149,10 +150,10 @@ export default function Post({ post }) {
                 </PostDesc>
                 <Img src={post.img} />
                 <Reviews>
-                    <Icon onClick={()=>{setLike(!Like)}}>
-                        {Like ? <FavoriteIcon style={{color:"red"}}/> : <FavoriteBorderIcon />}
+                    <Icon onClick={() => { setLike(!Like) }}>
+                        {Like ? <FavoriteIcon style={{ color: "red" }} /> : <FavoriteBorderIcon />}
                     </Icon>
-                    <Icon onClick={()=>{setCommentOpen(!commentOpen)}}>
+                    <Icon onClick={() => { setCommentOpen(!commentOpen) }}>
                         <InsertCommentIcon />
                     </Icon>
                     <Icon>
@@ -160,16 +161,16 @@ export default function Post({ post }) {
                     </Icon>
                 </Reviews>
                 <Comments mode={commentOpen}>
-                   <form >
-                   <AddComment>
-                        <Avatar src={currentUser.profilePic} sx={{width:"3rem", height:"3rem"}}/>
-                        <Input/>
-                        <Button variant="contained">Send</Button>
-                    </AddComment>
-                   </form>
-                   {comments.map(cmts=>(
-                     <Comment details={cmts} key={cmts.id}/>
-                   ))}
+                    <form >
+                        <AddComment>
+                            <Avatar src={currentUser.profilePic} sx={{ width: "3rem", height: "3rem" }} />
+                            <Input />
+                            <Button variant="contained">Send</Button>
+                        </AddComment>
+                    </form>
+                    {cmts.map(cmts => (
+                        <Comment details={cmts} key={cmts.id} />
+                    ))}
                 </Comments>
 
 
