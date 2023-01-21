@@ -79,8 +79,8 @@ export const Login = () => {
         <Content1>
           <Form>
             <Title>Sign Into Your Account</Title>
-            <TextField label="Username" name='username' onChange={handle_change}/>
-            <TextField label="Password" name='password' onChange={handle_change}/>
+            <TextField label="Username" name='username' type='text' onChange={handle_change}/>
+            <TextField label="Password" name='password' type='password' onChange={handle_change}/>
             <span>Forget Password?</span>
            <Button onClick={handle_login} type='submit'>Sign In</Button>
            {Successs && <Navigate to='/'/>}

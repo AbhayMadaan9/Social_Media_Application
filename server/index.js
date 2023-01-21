@@ -32,6 +32,7 @@ app.use(cors({credentials: true, origin: true}))
 app.use('/auth', require('./routes/auths'))
 app.use('/user', require('./routes/posts'))
 app.use('/users', require('./routes/comments'))
+app.use('/userss', require('./routes/likes'))
 
 
 app.listen(5500, ()=>{console.log('listening at http://localhost:5500')})

@@ -108,18 +108,23 @@ export default function Post({ post }) {
     const handleClose = () => setOpen(false);
     const [commentOpen, setCommentOpen] = React.useState(false);
     const [Like, setLike] = React.useState(false);
+    const [likesCount, setlikesCount] = React.useState([])
+    const [likes, setlikes] = React.useState({
+        no: 0,
+        postid: 0
+    })
     const { currentUser } = React.useContext(AuthContext);
     const [cmts, setcmts] = React.useState([])
     const [addCmts, setaddCmts] = React.useState({
         desc: "",
         postId: post.id
     })
-
+    
     React.useEffect(() => {
-      const res = axios.get('http://localhost:5500/users/comments?postID='+ post.id,{withCredentials: true})
-      setcmts(res.data);
-      console.log(res.data);
-  }, [cmts])
+        const res = axios.get('http://localhost:5500/users/comments?postID='+ post.id,{withCredentials: true})
+            setcmts(res.data);
+            console.log(res.data);
+       }, [])
   
     const handle_delete = (e) => {
         const details = { userpostId: post.id, userId: post.user_id }
@@ -136,6 +141,19 @@ export default function Post({ post }) {
         setaddCmts((prev)=>({
             ...prev, [e.target.name]: e.target.value
          } ))
+    }
+    const handleLikes = ()=>{
+        // const count = likes.no;
+        //  count = Like?count+1:count-1;
+        // setlikes({
+        //     no: count,
+        //     postid: post.id
+        // })
+
+        const res = axios.get("http://localhost:5500/userss/likes?postID="+ post.id,{withCredentials: true});
+        setlikesCount(res.data);
+        console.log(likesCount);
+        setLike(!Like) 
     }
     return (
         <>
@@ -165,17 +183,20 @@ export default function Post({ post }) {
                 </PostDesc>
                 <Img src={post.img} />
                 <Reviews>
-                    <Icon onClick={() => { setLike(!Like) }}>
+                    <Icon onClick={handleLikes}>
                         {Like ? <FavoriteIcon style={{ color: "red" }} /> : <FavoriteBorderIcon />}
                     </Icon>
-                    <Icon onClick={() => { setCommentOpen(!commentOpen) }}>
+                    {/* {likesCount.length} */}
+                    <Icon onClick={() => {
+            setCommentOpen(!commentOpen) 
+                         }}>
                         <InsertCommentIcon />
                     </Icon>
                     <Icon>
                         <ShareIcon />
                     </Icon>
-                </Reviews>
-                <Comments mode={commentOpen}>
+                </Reviews> 
+                <Comments mode={commentOpen} >
                     <form >
                         <AddComment>
                             <Avatar src={currentUser.profilePic} sx={{ width: "3rem", height: "3rem" }} />
